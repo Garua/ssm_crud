@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop
+        https://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+<!--spring的配置文件-->
+    <context:property-placeholder location="classpath:JdbcConfig.properties"></context:property-placeholder>
+    <context:component-scan base-package="com.loocc">
+        <context:exclude-filter type="annotation" expression="com.loocc.controller"/>
+    </context:component-scan>
+    <bean  id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="${jdbc.driver}"></property>
+        <property name="password" value="${jdbc.password}"></property>
+        <property name="jdbcUrl" value="${jdbc.url}"></property>
+        <property name="user" value="${jdbc.username}"></property>
+    </bean>
+
+<!-- 配置和mybatis的整合   -->
+    <bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="configLocation" value="classpath:mybatisConfig.xml"></property>
+        <property name="dataSource" ref="dataSource"></property>
+        <property name="mapperLocations" value="classpath:mapper/*.xml"></property>
+    </bean>
+<!-- 配置扫描器，将mybatis的接口的代理对象添加的ioc容器中  -->
+    <bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+<!--  扫描所有的dao接口      -->
+        <property name="basePackage" value="com.loocc.dao"></property>
+    </bean>
+
+<!--事务控制   -->
+<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+<!--  控制住数据源  -->
+    <property name="dataSource" ref="dataSource"></property>
+</bean>
+<!-- 配置一个可以执行批量操作的SqlSession   -->
+    <bean id="sessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg name="sqlSessionFactory" ref="sessionFactory"></constructor-arg>
+        <constructor-arg name="executorType" value="BATCH"></constructor-arg>
+    </bean>
+
+
+    <aop:config>
+<!--   service后面的两个点的意思是包含它的子包     -->
+        <aop:pointcut id="txPoint" expression="execution(* com.loocc.service..*.*  (..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="txPoint"></aop:advisor>
+    </aop:config>
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+<!--     所有方法都是事务方法       -->
+            <tx:method name="*"/>
+<!--     以get开始的所有方法       -->
+            <tx:method name="get*" read-only="true"></tx:method>
+        </tx:attributes>
+    </tx:advice>
+
+
+</beans>
