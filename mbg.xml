@@ -12,7 +12,7 @@
         </commentGenerator>
         
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3306/mybatis_test"
+                        connectionURL="jdbc:mysql://localhost:3306/mybatis_test?serverTimezone=UTC&amp;useSSL=false"
                         userId="root"
                         password="1460088689">
         </jdbcConnection>
@@ -42,9 +42,9 @@
         tableName：数据库中的表名
         domainObjectName:生成的实体bean名
     -->
-        <table tableName="tb_emp"  domainObjectName="Employee">
+        <table tableName="employee"  domainObjectName="Employee">
         </table>
-        <table tableName="tb_dept" domainObjectName="Department"></table>
+        <table tableName="department" domainObjectName="Department"></table>
 
     </context>
 </generatorConfiguration>

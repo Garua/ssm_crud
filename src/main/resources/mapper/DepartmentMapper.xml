@@ -72,7 +72,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from tb_dept
+    from department
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -83,25 +83,25 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from tb_dept
+    from department
     where dept_id = #{deptId,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from tb_dept
+    delete from department
     where dept_id = #{deptId,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.loocc.domain.DepartmentExample">
-    delete from tb_dept
+    delete from department
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.loocc.domain.Department">
-    insert into tb_dept (dept_id, dept_name)
+    insert into department (dept_id, dept_name)
     values (#{deptId,jdbcType=INTEGER}, #{deptName,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.loocc.domain.Department">
-    insert into tb_dept
+    insert into department
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="deptId != null">
         dept_id,
@@ -120,13 +120,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.loocc.domain.DepartmentExample" resultType="java.lang.Long">
-    select count(*) from tb_dept
+    select count(*) from department
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update tb_dept
+    update department
     <set>
       <if test="record.deptId != null">
         dept_id = #{record.deptId,jdbcType=INTEGER},
@@ -140,7 +140,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update tb_dept
+    update department
     set dept_id = #{record.deptId,jdbcType=INTEGER},
       dept_name = #{record.deptName,jdbcType=VARCHAR}
     <if test="_parameter != null">
@@ -148,7 +148,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.loocc.domain.Department">
-    update tb_dept
+    update department
     <set>
       <if test="deptName != null">
         dept_name = #{deptName,jdbcType=VARCHAR},
@@ -157,7 +157,7 @@
     where dept_id = #{deptId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.loocc.domain.Department">
-    update tb_dept
+    update department
     set dept_name = #{deptName,jdbcType=VARCHAR}
     where dept_id = #{deptId,jdbcType=INTEGER}
   </update>

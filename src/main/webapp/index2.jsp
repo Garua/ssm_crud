@@ -53,7 +53,7 @@
                         <label class="col-sm-2 control-label">gender</label>
                         <div class="col-sm-10">
                             <label class="radio-inline">
-                                <input type="radio" name="gender" id="genderF_update_input" value="F" checked="checked"> 女
+                                <input type="radio" name="gender" id="genderF_update_input" value="F" > 女
                             </label>
                             <label class="radio-inline">
                                 <input type="radio" name="gender" id="genderM_update_input" value="M"> 男
@@ -232,6 +232,7 @@
         $("#emps_table tbody").empty();
         var emps = data.listEmp.pageInfo.list;
         $.each(emps, function (index, item) {
+
             var checkBoxTd = $("<td><input type='checkbox'class='check_item'/></td>");
             var empIdTd = $("<td></td>").append(item.empId);
             var empNameTd = $("<td></td>").append(item.empName);
@@ -253,7 +254,7 @@
             //为delBtn添加一个自定义属性，值为当前emp的id，为后面编辑emp信息时，得到empId铺垫
             delBtn.attr("delete-id",item.empId);
             var btnTd = $("<td></td>").append(editBtn).append(" ").append(delBtn);
-            //append方法执行完了以后还是返回原来撤销元素
+            //append方法执行完了以后还是返回原来的元素
             $("<tr></tr>").append(checkBoxTd).append(empIdTd).append(empNameTd).append(genderTd).append(emailTd)
                 .append(deptNameTd).append(btnTd).appendTo("#emps_table tbody")
         })

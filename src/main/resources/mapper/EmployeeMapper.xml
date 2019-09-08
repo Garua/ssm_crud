@@ -97,7 +97,7 @@
             distinct
         </if>
         <include refid="WithDept_Column_List"/>
-        from tb_emp e left join tb_dept d on e.d_id=d.dept_id
+        from employee e left join department d on e.d_id=d.dept_id
         <if test="_parameter != null">
             <include refid="Base_Column_List"/>
         </if>
@@ -108,7 +108,7 @@
     <select id="selectByPrimaryKeyWithDept" resultMap="WithDeptResultMap">
         select
         <include refid="WithDept_Column_List"/>
-        from tb_emp e left join tb_dept d on e.d_id = d.dept_id
+        from employee e left join department d on e.d_id = d.dept_id
         where emp_id = #{empId,jdbcType=INTEGER}
     </select>
 
@@ -119,7 +119,7 @@
             distinct
         </if>
         <include refid="Base_Column_List"/>
-        from tb_emp
+        from employee
         <if test="_parameter != null">
             <include refid="Example_Where_Clause"/>
         </if>
@@ -130,27 +130,27 @@
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from tb_emp
+        from employee
         where emp_id = #{empId,jdbcType=INTEGER}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from tb_emp
+    delete from employee
     where emp_id = #{empId,jdbcType=INTEGER}
   </delete>
     <delete id="deleteByExample" parameterType="com.loocc.domain.EmployeeExample">
-        delete from tb_emp
+        delete from employee
         <if test="_parameter != null">
             <include refid="Example_Where_Clause"/>
         </if>
     </delete>
     <insert id="insert" parameterType="com.loocc.domain.Employee">
-    insert into tb_emp (emp_id, emp_name, gender, 
+    insert into employee (emp_id, emp_name, gender,
       email, d_id)
     values (#{empId,jdbcType=INTEGER}, #{empName,jdbcType=VARCHAR}, #{gender,jdbcType=CHAR}, 
       #{email,jdbcType=VARCHAR}, #{dId,jdbcType=INTEGER})
   </insert>
     <insert id="insertSelective" parameterType="com.loocc.domain.Employee">
-        insert into tb_emp
+        insert into employee
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="empId != null">
                 emp_id,
@@ -187,13 +187,13 @@
         </trim>
     </insert>
     <select id="countByExample" parameterType="com.loocc.domain.EmployeeExample" resultType="java.lang.Long">
-        select count(*) from tb_emp
+        select count(*) from employee
         <if test="_parameter != null">
             <include refid="Example_Where_Clause"/>
         </if>
     </select>
     <update id="updateByExampleSelective" parameterType="map">
-        update tb_emp
+        update employee
         <set>
             <if test="record.empId != null">
                 emp_id = #{record.empId,jdbcType=INTEGER},
@@ -216,7 +216,7 @@
         </if>
     </update>
     <update id="updateByExample" parameterType="map">
-        update tb_emp
+        update employee
         set emp_id = #{record.empId,jdbcType=INTEGER},
         emp_name = #{record.empName,jdbcType=VARCHAR},
         gender = #{record.gender,jdbcType=CHAR},
@@ -227,7 +227,7 @@
         </if>
     </update>
     <update id="updateByPrimaryKeySelective" parameterType="com.loocc.domain.Employee">
-        update tb_emp
+        update employee
         <set>
             <if test="empName != null">
                 emp_name = #{empName,jdbcType=VARCHAR},
@@ -245,7 +245,7 @@
         where emp_id = #{empId,jdbcType=INTEGER}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.loocc.domain.Employee">
-    update tb_emp
+    update employee
     set emp_name = #{empName,jdbcType=VARCHAR},
       gender = #{gender,jdbcType=CHAR},
       email = #{email,jdbcType=VARCHAR},

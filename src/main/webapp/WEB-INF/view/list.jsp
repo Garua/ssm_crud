@@ -93,7 +93,6 @@
                                     aria-hidden="true">&laquo;</span></a>
                         </li>
                     </c:if>
-                    </li>
                     <c:forEach items="${pageInfo.navigatepageNums}" var="page_Num">
                         <%--                  这里( <li <c:)必须有一个空格，不然样式不对      --%>
                         <li <c:if test="${page_Num == pageInfo.pageNum}">class="active" </c:if>>
